@@ -95,4 +95,38 @@ Spring Framework
 
             XML Based Config
             Java Based Config
+
+                @Configuration
+                public class BeanConfiguration{
+                    
+                    @Bean
+                    public Scanner scanner(){
+                        return new Scanner(System.in);
+                    }
+
+                    @Bean
+                    public LocalDate today(){
+                        return LocalDate.now();
+                    }
+                }
+
             Annotation Based Config
+
+                @Component
+                    @Service
+                    @Repository
+                    ....etc
+
+                @ComponentScan("basePackage")
+                @Autowired
+                    Field Injection
+                    Constructor Injection
+                    Setter Injection
+                    
+                    byType      maps a bean to a field if both are of the smae Type.
+                
+                @Qualifier
+                    byName      enables us to map a bean to a field through bean name.
+
+                @Value          injects a value into a primitive or string field
+                @PropertySource
