@@ -130,3 +130,58 @@ Spring Framework
 
                 @Value          injects a value into a primitive or string field
                 @PropertySource
+
+                @Scope("singleton|prototype|reqeust|session|global-session")
+
+                @PostConstruct
+                @PreDestroy
+
+    Spring Boot
+    ----------------------------------------------------------------------------------------
+
+        is a spring framwork module that offers Auto-Configuration and thus promoting
+        Rapid Application Development.
+
+        Spring Core and Context (Ioc)
+            1. define a bean cofniguaration class
+            2. apply @Configuaration,@ComponentScan,@PropertySource
+            3. create a .properties file
+
+        Spring Web (Web MVC)
+            1. config all paths to DispatcherServlet
+            2. create a bean for InternalResourceViewResolver 
+            3. config a UrlHandler ..etc
+
+        Spring Security
+            1. config SecurtyAdapter to inform what kind of security we want -- form-authentication/token-authentication...etc
+            2. the suer name and role providers are to be configed...
+            ....
+
+        Spring Boot will eliminate all of those configs and will provide overridable default configs for
+        any known spring module.
+
+        Spring Boot Project also called as Spring Starter Project has an alternate to each spring module
+        as spring starter modules, these starter moduel will provide the need defualt config on top
+        of the original module.
+
+        @SpringBootApplication = 
+            @Configuration + 
+            @ComponentScan("packageInWhichWeHaveTheApplicationClass") + 
+            @ProeprtySource("classpath:application.properties")
+
+        SpringApplication.run()
+            -> create an applicationContext
+            -> execute all implementations of Runner interfaces
+            -> destroy the applicationContext
+
+        Spring Boot Offers
+            CommandLineRunner ...etc.,
+
+        Create a Spring Boot Project
+            1. using Spring initilizer tool -> https://start.spring.io
+            2. using STS spring starter project wizard
+            3. using Spring Boot CLI
+
+
+
+        
