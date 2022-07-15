@@ -175,13 +175,22 @@ Spring Framework
             -> destroy the applicationContext
 
         Spring Boot Offers
-            CommandLineRunner ...etc.,
+            CommandLineRunner  public abstract void run(String ...args);
+            AppliationRunner   public abstract void run(SpringApplicationArgments args);
 
         Create a Spring Boot Project
             1. using Spring initilizer tool -> https://start.spring.io
             2. using STS spring starter project wizard
             3. using Spring Boot CLI
 
+    Spring Data JPA
+    ----------------------------------------------------------------------------------------
 
+        it offers auto implemented repositories.
+
+        CrudRepository
+            |- JpaRepository
+
+        @Transactional
 
         
