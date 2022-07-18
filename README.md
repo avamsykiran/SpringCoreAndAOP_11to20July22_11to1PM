@@ -192,5 +192,7 @@ Spring Framework
             |- JpaRepository
 
         @Transactional
+            For decalrtive isolation and propagation please refer 
+                https://www.baeldung.com/spring-transactional-propagation-isolation
 
-        
+    

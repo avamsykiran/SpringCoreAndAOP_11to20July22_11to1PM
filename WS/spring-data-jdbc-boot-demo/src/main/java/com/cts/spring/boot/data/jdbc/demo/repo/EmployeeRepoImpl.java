@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,10 +18,10 @@ import com.cts.spring.boot.data.jdbc.demo.model.Employee;
 @Repository
 public class EmployeeRepoImpl implements EmployeeRepo {
 
-	public static final String GET_ALL = "SELECT empId,fullName,basic,joinDate FROM emps";
-	public static final String GET_BY_ID = "SELECT empId,fullName,basic,joinDate FROM emps WHERE empId=:empId";
-	public static final String INS = "INSERT INTO emps(fullName,basic,joinDate) VALUES(:fullName,:basic,:joinDate)";
-	public static final String DEL_BY_ID = "DELETE FROM emps WHERE empId=:empId";
+	public static final String GET_ALL = "SELECT emp_id,full_name,basic,join_date FROM emps";
+	public static final String GET_BY_ID = "SELECT emp_id,full_name,basic,join_date FROM emps WHERE emp_id=:empId";
+	public static final String INS = "INSERT INTO emps(full_name,basic,join_date) VALUES(:fullName,:basic,:joinDate)";
+	public static final String DEL_BY_ID = "DELETE FROM emps WHERE emp_id=:empId";
 	
 	private RowMapper<Employee> empRowMapper = (rs,rowNum) -> {
 		Employee emp = new Employee();
@@ -47,7 +48,12 @@ public class EmployeeRepoImpl implements EmployeeRepo {
 
 	@Override
 	public Optional<Employee> findById(Long empId) {
-		Employee emp = jdbcTemplate.queryForObject(GET_BY_ID, new MapSqlParameterSource("empId", empId), empRowMapper);
+		Employee emp = null;
+		try {
+			emp = jdbcTemplate.queryForObject(GET_BY_ID, new MapSqlParameterSource("empId", empId), empRowMapper);
+		}catch(EmptyResultDataAccessException exp) {
+			emp =null;
+		}
 		return Optional.of(emp);
 	}
 
