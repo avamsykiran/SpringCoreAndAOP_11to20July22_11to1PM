@@ -182,7 +182,18 @@ Spring Framework
             1. using Spring initilizer tool -> https://start.spring.io
             2. using STS spring starter project wizard
             3. using Spring Boot CLI
+    
+    Spring Data Jdbc
+    ----------------------------------------------------------------------------------------
 
+        is module of spring framework used to connect a database .
+
+        JdbcTemplate
+        NamedParameterJdbcTemplate
+                update
+                query
+                queryForObject
+    
     Spring Data JPA
     ----------------------------------------------------------------------------------------
 
@@ -195,4 +206,87 @@ Spring Framework
             For decalrtive isolation and propagation please refer 
                 https://www.baeldung.com/spring-transactional-propagation-isolation
 
-    
+        @Entity
+        @Table(name="emps")
+        public class Employee {
+            @Id
+            @GeneratedValue(strategy=IDENTITY)
+            private Long empId;
+            private String fullName;
+            private Double basic;
+            private String mailId;
+
+            @ManyToOne
+            private Department dept;
+            ...........
+        }
+
+        public interface EmployeeRepo extends JpaRepository<Employee,Long>{
+            boolean existsByMailId(String mailId);
+            Optional<Employee> findByMailId(String mailId);
+            List<Employee> findAllByFullName(String fullName);
+            List<Employee> findAllByDept(Department dept);
+
+            @Query("SELECT e FROM Employee e WHERE e.basic BETWEEN :start AND :end")
+            List<Employee> retriveEmployeesWithBasicRange(double start,double end);
+
+            @Query("SELECT e FROM Employee e INNER JOIN Department d ON e.dept WHERE d.dname=:dname")
+            List<Employee> retriveEmployeesorGivenDeptName(String dname);
+        }
+
+    Spring AOP
+    ----------------------------------------------------------------------------------------
+
+      Aspect Oriented Programming
+
+            An aspect is a cross cutting concern, free of any bussiness logic but goes hand-in-hand
+            with the bussiness logic.
+
+            Logging
+            Authentication and Authorization
+            Transaction Management ..etc are a few aspects.
+
+            An aspect is executing an ADVICE at a choosen POINT-CUT out of various JOIN-POINTS
+            in an application.
+
+            Join Point - is any place in your application at which an advice must inteveine.
+
+                method calls
+                expection handling ...etc are join points
+
+            Point Cut - is an expression (method signature) through which a specific 
+                join point is choosen for an advice.
+
+            Advice  - is the piece of implementation that has to execute at the coosen point-cut.
+
+            Aspect Types
+                Around              execute an advice before invoking and after executing a join-point choosen by a point-cut
+                Before              execute an advice before invoking a  join-point choosen by a point-cut
+                After               execute an advice after executing a  join-point choosen by a point-cut
+                After Throwing      execute an advice after a  join-point choosen by a point-cut throws a excepton
+                After Returning     execute an advice after a  join-point choosen by a point-cut returns a value
+
+        PointCut Expression
+        ------------------------
+        "execution(returnType packageName.ClassName.methodName(...))"
+        
+        AspectJ Annotations
+        -------------------------
+        @EnableAspectJAutoProxy
+        @Aspect - Represents an aspect advice class.
+        @Before – Run before the method execution
+        @After – Run after the method returned a result
+        @AfterReturning – Run after the method returned a result, intercept the returned result as well.
+        @AfterThrowing – Run after the method throws an exception
+        @Around – Run around the method execution, combine all three advices above.
+        
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<scope>compile</scope>
+		</dependency>
