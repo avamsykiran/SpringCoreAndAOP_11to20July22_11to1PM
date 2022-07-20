@@ -34,9 +34,10 @@ public class DemoAspect {
 	}
 	
 	@Around("execution(* com.cts.spring.boot.aop.demo.service.*.*(..))")
-	public void aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
 		logger.info(" this is before the execution for {}", joinPoint);
-		joinPoint.proceed();
+		Object obj = joinPoint.proceed();
 		logger.info(" this is after the execution for {}", joinPoint);
+		return obj;
 	}
 }
